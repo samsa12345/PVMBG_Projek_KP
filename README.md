@@ -8,7 +8,7 @@
 
 ## 📌 Tentang Proyek
 
-**Volcano Monitoring System** merupakan sistem monitoring gunung api berbasis *Machine Learning* yang dikembangkan dalam kegiatan kerja praktik di **Pusat Vulkanologi dan Mitigasi Bencana Geologi (PVMBG)**. Sistem ini dirancang untuk membantu analisis citra CCTV gunung api melalui pendekatan pengolahan citra dan pembelajaran mesin.
+**Volcano Monitoring System** merupakan sistem monitoring gunung api berbasis *Machine Learning* yang dikembangkan dalam kegiatan kerja praktik di **Pusat Vulkanologi dan Mitigasi Bencana Geologi (PVMBG)** dibawah supervisi Dr. Devy Kamil Syahbana. Sistem ini dirancang untuk membantu analisis citra CCTV gunung api melalui pendekatan pengolahan citra dan pembelajaran mesin.
 
 Pemantauan gunung api menghasilkan banyak citra CCTV yang perlu diamati untuk mengetahui kondisi visual gunung. Pengolahan citra secara otomatis dapat membantu mengelompokkan kondisi yang terlihat pada gambar dan menandai citra yang memiliki karakteristik berbeda dari kelompok data pada umumnya.
 
@@ -370,6 +370,7 @@ Badan Geologi, Kementerian Energi dan Sumber Daya Mineral Republik Indonesia.
 
 **Pembimbing Lapangan**
 
+Dr. Devy Kamil Syahbana
 Achmad Fathony, S.T.
 
 ## 📚 Dokumentasi
