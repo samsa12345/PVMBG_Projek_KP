@@ -1,0 +1,80 @@
+
+# Python
+__pycache__/
+*.py[cod]
+*.log
+
+# Virtual environments
+venv_env/
+.venv/
+venv/
+venv312/
+env/
+
+# Environment variables and secretsnnnnnnnnnn
+.env
+.env.*
+!.env.example
+
+# Editor
+.vscode/
+
+# Cache and test
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Temporary files
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+# Local database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploaded prediction images
+uploads/*
+!uploads/.gitkeep
+
+# Model files - do not upload large model binaries by default
+*.keras
+*.h5
+*.hdf5
+*.pkl
+*.weights
+*.weights.h5
+venv_env/
+@"
+
+# Python virtual environment
+venv_env/
+.venv/
+venv/
+
+# Dataset dan data mentah
+dataset/
+datasets/
+data/
+raw/
+*.zip
+
+# Model machine learning
+model/
+models/
+*.keras
+*.h5
+*.hdf5
+*.pt
+*.pth
+*.onnx
+
+# Cache Python
+__pycache__/
+*.pyc
+"@ | Add-Content .gitignore
+
+# Git history backup - do not upload
+.git-backup/

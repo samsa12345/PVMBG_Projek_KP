@@ -1,0 +1,449 @@
+{% extends "base.html" %}
+
+{% block title %}Pendekatan Machine Learning | Volcano Monitoring System{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Pendekatan Machine Learning</h1>
+    <p class="page-description">Ringkasan model, dataset, performa, dan metode analisis yang digunakan pada sistem Volcano Monitoring.</p>
+</div>
+
+<!-- SECTION 1: GUNUNG LEWOTOLOK (SUPERVISED) -->
+<div class="about-card">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
+        <div>
+            <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.35rem;">
+                1. Gunung Lewotolok
+            </h2>
+            <span class="about-header-tag badge-supervised">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Supervised Learning — ResNet50
+            </span>
+        </div>
+    </div>
+
+    <p style="color: var(--text-secondary); font-size: 0.98rem; line-height: 1.6; margin-bottom: 1.5rem;">
+        Model klasifikasi citra berbasis Deep Learning menggunakan arsitektur <strong>ResNet50</strong> pretrained ImageNet yang di-fine-tuning untuk mengklasifikasikan kondisi visual Gunung Lewotolok ke dalam 4 kelas: 
+        <span style="color: var(--accent-cyan); font-weight: 600;">Tertutup Awan</span>, 
+        <span style="color: var(--accent-cyan); font-weight: 600;">Asap Putih</span>, 
+        <span style="color: var(--status-eruption); font-weight: 600;">Erupsi / Awan Kelabu</span>, dan 
+        <span style="color: var(--status-normal); font-weight: 600;">Tenang</span>.
+    </p>
+
+    <!-- METRIC STAT CARDS -->
+    <div class="tech-stat-grid">
+        <div class="tech-stat-card">
+            <div class="tech-stat-number" style="color: var(--status-normal);">85,98%</div>
+            <div class="tech-stat-label">Test Accuracy</div>
+        </div>
+        <div class="tech-stat-card">
+            <div class="tech-stat-number" style="color: var(--accent-cyan);">0,8424</div>
+            <div class="tech-stat-label">Macro F1</div>
+        </div>
+        <div class="tech-stat-card">
+            <div class="tech-stat-number" style="color: var(--accent-blue);">0,8602</div>
+            <div class="tech-stat-label">Weighted F1</div>
+        </div>
+        <div class="tech-stat-card">
+            <div class="tech-stat-number" style="color: #a78bfa;">0,4329</div>
+            <div class="tech-stat-label">Test Loss</div>
+        </div>
+        <div class="tech-stat-card">
+            <div class="tech-stat-number" style="color: var(--status-anomaly);">72,90 m</div>
+            <div class="tech-stat-label">Training Duration</div>
+        </div>
+    </div>
+
+    <div style="background-color: rgba(6, 182, 212, 0.06); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: var(--radius-md); padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
+        <strong style="color: var(--accent-cyan);">Catatan Evaluasi Metrik:</strong> Accuracy tidak boleh dibaca sendirian karena distribusi antar kelas tidak seimbang. Oleh karena itu, Precision, Recall, dan F1-Score juga digunakan untuk mengevaluasi performa model secara objektif.
+    </div>
+
+    <!-- DETAILS GRID LEWOTOLOK -->
+    <div class="tech-grid-2">
+        <!-- DATASET & SPLIT -->
+        <div class="tech-subcard">
+            <div class="tech-subcard-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                Dataset &amp; Split Experiment
+            </div>
+            <table class="spec-table-compact">
+                <tr><td class="spec-key">Total Citra Berlabel</td><td class="spec-val">10.850 gambar</td></tr>
+                <tr><td class="spec-key">Jumlah Kelas</td><td class="spec-val">4 Kelas Visual</td></tr>
+                <tr><td class="spec-key">Train Set (70%)</td><td class="spec-val">7.757 gambar</td></tr>
+                <tr><td class="spec-key">Validation Set (15%)</td><td class="spec-val">1.659 gambar</td></tr>
+                <tr><td class="spec-key">Test Set (15%)</td><td class="spec-val">1.434 gambar</td></tr>
+                <tr><td class="spec-key">Metode Splitting</td><td class="spec-val">GroupSplit (Session / Tanggal)</td></tr>
+                <tr><td class="spec-key">Oversampling</td><td class="spec-val">Khusus Train set (12.864 sampel)</td></tr>
+            </table>
+        </div>
+
+        <!-- MODEL ARCHITECTURE & HYPERPARAMETERS -->
+        <div class="tech-subcard">
+            <div class="tech-subcard-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                Arsitektur &amp; Hyperparameter
+            </div>
+            <table class="spec-table-compact">
+                <tr><td class="spec-key">Backbone Model</td><td class="spec-val">ResNet50 (Pretrained ImageNet)</td></tr>
+                <tr><td class="spec-key">Input Resolution</td><td class="spec-val">224 &times; 224 &times; 3</td></tr>
+                <tr><td class="spec-key">Fine-Tuning Scope</td><td class="spec-val">30 Layer Terakhir</td></tr>
+                <tr><td class="spec-key">Dense Layer</td><td class="spec-val">GlobalAvgPool &rarr; Dense(256)</td></tr>
+                <tr><td class="spec-key">Regularization</td><td class="spec-val">Batch Normalization, Dropout 0,30</td></tr>
+                <tr><td class="spec-key">Optimizer &amp; Loss</td><td class="spec-val">Adam (LR: 1e-5), Categorical CE</td></tr>
+                <tr><td class="spec-key">Epoch &amp; Callbacks</td><td class="spec-val">16 / 50 Epoch (EarlyStopping)</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- PREPROCESSING & PER-CLASS PERFORMANCE -->
+    <div class="tech-grid-2">
+        <!-- PREPROCESSING -->
+        <div class="tech-subcard">
+            <div class="tech-subcard-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                Preprocessing &amp; Data Augmentation
+            </div>
+            <ul style="margin: 0 0 0 1.15rem; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7;">
+                <li><strong>Contrast Enhancement:</strong> CLAHE (Contrast Limited Adaptive Histogram Equalization).</li>
+                <li><strong>Image Scaling:</strong> Resize ke 224 &times; 224 pixel &amp; ResNet normalization.</li>
+                <li><strong>Spatial Augmentation:</strong> Rotasi &plusmn;8&deg;, Shift horizontal/vertikal 5%.</li>
+                <li><strong>Zoom &amp; Flip:</strong> Zoom range 0,90–1,20 dan Horizontal Flip.</li>
+            </ul>
+        </div>
+
+        <!-- PER-CLASS PERFORMANCE TABLE -->
+        <div class="tech-subcard">
+            <div class="tech-subcard-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                Performa per Kelas (Test Set)
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="data-table" style="font-size: 0.83rem;">
+                    <thead>
+                        <tr>
+                            <th>Kelas</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1-Score</th>
+                            <th>Support</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tertutup Awan</strong></td>
+                            <td>0,9311</td>
+                            <td>0,8963</td>
+                            <td><strong style="color: var(--accent-cyan);">0,9133</strong></td>
+                            <td>588</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Asap Putih</strong></td>
+                            <td>0,8414</td>
+                            <td>0,8447</td>
+                            <td><strong style="color: var(--accent-cyan);">0,8430</strong></td>
+                            <td>515</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Erupsi / Awan Kelabu</strong></td>
+                            <td>0,7803</td>
+                            <td>0,7598</td>
+                            <td><strong style="color: var(--status-eruption);">0,7699</strong></td>
+                            <td>229</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tenang</strong></td>
+                            <td>0,7578</td>
+                            <td>0,9510</td>
+                            <td><strong style="color: var(--status-normal);">0,8435</strong></td>
+                            <td>102</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 2: GUNUNG TANGKUBAN PERAHU (UNSUPERVISED) -->
+<div class="about-card">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
+        <div>
+            <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.35rem;">
+                2. Gunung Tangkuban Perahu
+            </h2>
+            <span class="about-header-tag badge-unsupervised">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                Unsupervised Learning — MobileNetV2 + K-Means
+            </span>
+        </div>
+    </div>
+
+    <p style="color: var(--text-secondary); font-size: 0.98rem; line-height: 1.6; margin-bottom: 1.5rem;">
+        Pendekatan unsupervised menggunakan <strong>MobileNetV2</strong> sebagai <em>feature extractor</em> 1.280-dimensi dan algoritma <strong>K-Means clustering</strong> untuk menemukan pola visual pada citra CCTV. Deteksi anomali dilakukan berdasarkan jarak Euclidean fitur terhadap centroid cluster terdekat.
+    </p>
+
+    <!-- UNSTRUCTURED STAT CARDS -->
+    <div class="tech-stat-grid">
+        <div class="tech-stat-card">
+            <div class="tech-stat-number" style="color: #a78bfa;">9.906</div>
+            <div class="tech-stat-label">File Valid (2 Rusak)</div>
+        </div>
+        <div class="tech-stat-card">
+            <div class="tech-stat-number" style="color: var(--accent-cyan);">1.280</div>
+            <div class="tech-stat-label">Feature Dimension</div>
+        </div>
+        <div class="tech-stat-card">
+            <div class="tech-stat-number" style="color: var(--status-normal);">K = 3</div>
+            <div class="tech-stat-label">Cluster Terpilih</div>
+        </div>
+        <div class="tech-stat-card">
+            <div class="tech-stat-number" style="color: var(--status-anomaly);">15,7920</div>
+            <div class="tech-stat-label">Threshold Anomali</div>
+        </div>
+        <div class="tech-stat-card">
+            <div class="tech-stat-number" style="color: var(--accent-blue);">327 detik</div>
+            <div class="tech-stat-label">Feature Ext. Duration</div>
+        </div>
+    </div>
+
+    <!-- DETAILS GRID TANGKUBAN -->
+    <div class="tech-grid-2">
+        <!-- FEATURE EXTRACTION & MODEL -->
+        <div class="tech-subcard">
+            <div class="tech-subcard-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                Feature Extraction &amp; K-Means
+            </div>
+            <table class="spec-table-compact">
+                <tr><td class="spec-key">Feature Extractor</td><td class="spec-val">MobileNetV2 (ImageNet)</td></tr>
+                <tr><td class="spec-key">Architecture Config</td><td class="spec-val">include_top = False, GlobalAvgPool</td></tr>
+                <tr><td class="spec-key">Feature Vector</td><td class="spec-val">1.280 Dimensi (Tanpa Fine-tune)</td></tr>
+                <tr><td class="spec-key">Batch Size</td><td class="spec-val">64 Citra / Batch</td></tr>
+                <tr><td class="spec-key">Ekstraksi Durasi</td><td class="spec-val">327 detik (&approx; 5,45 menit)</td></tr>
+                <tr><td class="spec-key">Metode Clustering</td><td class="spec-val">K-Means pada Feature Space 1.280D</td></tr>
+            </table>
+        </div>
+
+        <!-- CLUSTER SELECTION (K ELBOW/SILHOUETTE) -->
+        <div class="tech-subcard">
+            <div class="tech-subcard-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                Pemilihan Jumlah Cluster (K)
+            </div>
+            <p style="font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 0.85rem;">
+                Evaluasi Silhouette Score dilakukan untuk menentukan jumlah cluster (K) optimal:
+            </p>
+            <table class="spec-table-compact">
+                <tr><td class="spec-key">K = 2</td><td class="spec-val">Silhouette Score: 0,196433</td></tr>
+                <tr style="background-color: rgba(139, 92, 246, 0.1);"><td class="spec-key" style="color: #a78bfa; font-weight: 700;">K = 3 (Terpilih)</td><td class="spec-val" style="color: #a78bfa; font-weight: 700;">Silhouette Score: 0,210797</td></tr>
+                <tr><td class="spec-key">K = 4</td><td class="spec-val">Silhouette Score: 0,184663</td></tr>
+            </table>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.75rem;">
+                <em>* K = 3 dipilih karena menghasilkan nilai Silhouette Score tertinggi di antara kandidat K yang diuji.</em>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLUSTER DISTRIBUTION & ANOMALY DETECTION -->
+    <div class="tech-grid-2">
+        <!-- CLUSTER DISTRIBUTION (STRICTLY NO SEMANTIC LABELS) -->
+        <div class="tech-subcard">
+            <div class="tech-subcard-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                Distribusi Cluster Unsupervised
+            </div>
+            <div class="cluster-progress-group">
+                <div class="cluster-item-row">
+                    <div class="cluster-item-header">
+                        <span style="color: var(--text-primary);">Cluster 0</span>
+                        <span style="color: var(--accent-cyan);">3.466 gambar (34,99%)</span>
+                    </div>
+                    <div class="cluster-bar-track">
+                        <div class="cluster-bar-fill" style="width: 34.99%; background-color: var(--accent-cyan);"></div>
+                    </div>
+                </div>
+
+                <div class="cluster-item-row">
+                    <div class="cluster-item-header">
+                        <span style="color: var(--text-primary);">Cluster 1</span>
+                        <span style="color: #a78bfa;">4.128 gambar (41,67%)</span>
+                    </div>
+                    <div class="cluster-bar-track">
+                        <div class="cluster-bar-fill" style="width: 41.67%; background-color: #a78bfa;"></div>
+                    </div>
+                </div>
+
+                <div class="cluster-item-row">
+                    <div class="cluster-item-header">
+                        <span style="color: var(--text-primary);">Cluster 2</span>
+                        <span style="color: var(--accent-blue);">2.312 gambar (23,34%)</span>
+                    </div>
+                    <div class="cluster-bar-track">
+                        <div class="cluster-bar-fill" style="width: 23.34%; background-color: var(--accent-blue);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ANOMALY DETECTION SPECIFICATIONS -->
+        <div class="tech-subcard" style="border-color: rgba(245, 158, 11, 0.3);">
+            <div class="tech-subcard-title" style="color: var(--status-anomaly);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--status-anomaly)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Anomaly Detection Baseline
+            </div>
+            <table class="spec-table-compact">
+                <tr><td class="spec-key">Metode Score</td><td class="spec-val">Jarak Euclidean ke Centroid Terdekat</td></tr>
+                <tr><td class="spec-key">Penentuan Threshold</td><td class="spec-val">Percentile 95 (15,792045)</td></tr>
+                <tr><td class="spec-key">Kondisi Normal</td><td class="spec-val" style="color: var(--status-normal);">9.410 gambar (&approx; 95%)</td></tr>
+                <tr><td class="spec-key">Kandidat Anomali</td><td class="spec-val" style="color: var(--status-anomaly);">496 gambar (&approx; 5%)</td></tr>
+            </table>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.75rem; line-height: 1.5;">
+                <em>* Anomaly Score &gt; 15,792045 menandakan citra menyimpang dari pola visual mayoritas baseline (Kandidat Anomali).</em>
+            </div>
+        </div>
+    </div>
+
+    <!-- UNSUPERVISED METRICS & PCA -->
+    <div class="tech-grid-2" style="margin-top: 1.25rem;">
+        <div class="tech-subcard">
+            <div class="tech-subcard-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                Metrik Evaluasi Unsupervised
+            </div>
+            <table class="spec-table-compact">
+                <tr><td class="spec-key">Silhouette Score</td><td class="spec-val">0,210797</td></tr>
+                <tr><td class="spec-key">Davies–Bouldin Index</td><td class="spec-val">1,765843</td></tr>
+                <tr><td class="spec-key">Calinski–Harabasz Index</td><td class="spec-val">2.317,272217</td></tr>
+            </table>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.75rem;">
+                <em>* Metrik ini digunakan untuk mengukur kerapatan dan pemisahan struktur cluster, bukan akurasi klasifikasi.</em>
+            </div>
+        </div>
+
+        <div class="tech-subcard">
+            <div class="tech-subcard-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                PCA 2D Feature Space Visualization
+            </div>
+            <table class="spec-table-compact">
+                <tr><td class="spec-key">Explained Variance PC1</td><td class="spec-val">24,18%</td></tr>
+                <tr><td class="spec-key">Explained Variance PC2</td><td class="spec-val">13,90%</td></tr>
+                <tr><td class="spec-key">Total Cumulative Variance</td><td class="spec-val">38,09%</td></tr>
+            </table>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.75rem;">
+                <em>* PCA 2D digunakan sebagai pembantu visualisasi dan tidak menggantikan representasi feature space asli 1.280D.</em>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 3: INFERENCE WORKFLOW PIPELINE EXAMPLES -->
+<div class="about-card">
+    <h2 style="font-size: 1.35rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1rem;">
+        Alur Inferensi Sistem (Inference Pipeline)
+    </h2>
+
+    <div class="tech-grid-2">
+        <!-- SUPERVISED INFERENCE -->
+        <div class="pipeline-card">
+            <span class="about-header-tag badge-supervised" style="margin-bottom: 0.5rem;">Supervised Inference — Lewotolok</span>
+            <div class="pipeline-flow">
+                <span class="pipeline-node">Citra Baru</span>
+                <span class="pipeline-arrow">&rarr;</span>
+                <span class="pipeline-node">CLAHE &amp; Resize</span>
+                <span class="pipeline-arrow">&rarr;</span>
+                <span class="pipeline-node">ResNet50</span>
+                <span class="pipeline-arrow">&rarr;</span>
+                <span class="pipeline-node">Softmax (4 Kelas)</span>
+            </div>
+            <div style="margin-top: 1rem; padding: 0.75rem; background-color: rgba(255, 255, 255, 0.03); border-radius: var(--radius-sm); font-size: 0.85rem; border: 1px solid var(--border-color);">
+                <strong>Contoh Hasil Inferensi Eksperimen:</strong><br>
+                <span style="color: var(--text-secondary);">Prediksi:</span> <span style="color: var(--accent-cyan); font-weight: 700;">Tertutup Awan</span> | 
+                <span style="color: var(--text-secondary);">Confidence:</span> <span style="color: var(--accent-cyan); font-weight: 700;">90,66%</span>
+            </div>
+        </div>
+
+        <!-- UNSUPERVISED INFERENCE -->
+        <div class="pipeline-card">
+            <span class="about-header-tag badge-unsupervised" style="margin-bottom: 0.5rem;">Unsupervised Inference — Tangkuban</span>
+            <div class="pipeline-flow">
+                <span class="pipeline-node">Citra Baru</span>
+                <span class="pipeline-arrow">&rarr;</span>
+                <span class="pipeline-node">MobileNetV2</span>
+                <span class="pipeline-arrow">&rarr;</span>
+                <span class="pipeline-node">Vector 1.280D</span>
+                <span class="pipeline-arrow">&rarr;</span>
+                <span class="pipeline-node">K-Means Distance</span>
+            </div>
+            <div style="margin-top: 1rem; padding: 0.75rem; background-color: rgba(255, 255, 255, 0.03); border-radius: var(--radius-sm); font-size: 0.85rem; border: 1px solid var(--border-color);">
+                <strong>Contoh Hasil Inferensi Eksperimen:</strong><br>
+                <span style="color: var(--text-secondary);">Cluster:</span> <span style="color: #a78bfa; font-weight: 700;">1</span> | 
+                <span style="color: var(--text-secondary);">Anomaly Score:</span> <span style="color: var(--status-normal); font-weight: 700;">15,774152</span> | 
+                <span style="color: var(--text-secondary);">Threshold:</span> <span>15,792045</span><br>
+                <span style="color: var(--text-secondary);">Status:</span> <span class="badge badge-normal" style="font-size: 0.75rem; padding: 0.15rem 0.5rem;">Normal</span>
+                <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-top: 0.25rem;">(Dikategorikan Normal karena Anomaly Score berada di bawah threshold 15,792045).</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 4: LIBRARY & TEKNOLOGI -->
+<div class="about-card">
+    <h2 style="font-size: 1.35rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
+        Library &amp; Teknologi
+    </h2>
+    <p style="color: var(--text-secondary); font-size: 0.92rem;">
+        Perangkat lunak, framework, dan pustaka komputasi yang digunakan dalam pipeline eksperimen dan aplikasi backend:
+    </p>
+
+    <div class="tech-stack-grid">
+        <div class="tech-stack-item">
+            <div class="tech-stack-title">TensorFlow / Keras</div>
+            <div class="tech-stack-desc">Untuk arsitektur ResNet50, MobileNetV2, training, inference, dan manajemen model deep learning.</div>
+        </div>
+        <div class="tech-stack-item">
+            <div class="tech-stack-title">scikit-learn</div>
+            <div class="tech-stack-desc">Untuk GroupShuffleSplit, K-Means clustering, PCA, dan perhitungan metrik evaluasi.</div>
+        </div>
+        <div class="tech-stack-item">
+            <div class="tech-stack-title">OpenCV</div>
+            <div class="tech-stack-desc">Untuk pra-pemrosesan citra CCTV, CLAHE contrast enhancement, dan operasi matriks piksel.</div>
+        </div>
+        <div class="tech-stack-item">
+            <div class="tech-stack-title">Pillow (PIL)</div>
+            <div class="tech-stack-desc">Untuk validasi integritas file gambar, decoding format citra, dan manipulasi orientasi.</div>
+        </div>
+        <div class="tech-stack-item">
+            <div class="tech-stack-title">NumPy</div>
+            <div class="tech-stack-desc">Untuk manipulasi array multidimensi, matrik fitur 1.280D, dan kalkulasi jarak Euclidean.</div>
+        </div>
+        <div class="tech-stack-item">
+            <div class="tech-stack-title">Pandas</div>
+            <div class="tech-stack-desc">Untuk pengelolaan data metadata citra, penanganan file CSV, dan agregasi laporan eksperimen.</div>
+        </div>
+        <div class="tech-stack-item">
+            <div class="tech-stack-title">Matplotlib / Seaborn</div>
+            <div class="tech-stack-desc">Untuk visualisasi grafik kurva training loss/accuracy, confusion matrix, dan distribusi anomaly score.</div>
+        </div>
+        <div class="tech-stack-item">
+            <div class="tech-stack-title">joblib</div>
+            <div class="tech-stack-desc">Untuk serialisasi dan penyiapan model K-Means cluster centroid yang siap digunakan pada server.</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 5: DISCLAIMER & CATATAN METODOLOGI -->
+<div class="disclaimer-box">
+    <div style="font-size: 1.6rem; line-height: 1; color: #fbbf24;">&#9888;</div>
+    <div>
+        <strong style="font-size: 1rem; color: #fbbf24;">Catatan Metodologi &amp; Disclaimer Resmi:</strong>
+        <p style="margin-top: 0.35rem; color: #fde68a; font-size: 0.9rem;">
+            Output machine learning merupakan hasil pemrosesan citra berdasarkan dataset dan konfigurasi eksperimen yang digunakan. Hasil klasifikasi dan anomaly detection tidak menggantikan pengamatan visual, validasi data, maupun penilaian resmi dari pihak berwenang.
+        </p>
+        <p style="margin-top: 0.35rem; color: #fde68a; font-size: 0.9rem;">
+            <strong>Tangkuban Perahu:</strong> Anomaly detection bersifat unsupervised. Kandidat anomali menunjukkan penyimpangan visual terhadap pola feature space yang dipelajari dan tidak secara otomatis berarti terjadi erupsi.
+        </p>
+    </div>
+</div>
+{% endblock %}
+

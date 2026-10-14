@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Volcano Monitoring System{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero">
+    <h1 class="hero-title">VOLCANO MONITORING SYSTEM</h1>
+    <p class="hero-subtitle">Sistem Monitoring Kondisi Gunung Api Berbasis Analisis Citra CCTV</p>
+</section>
+
+<!-- VOLCANO SUMMARY GRID -->
+<div class="volcano-grid">
+
+    <!-- GUNUNG LEWOTOLOK CARD -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">Gunung Lewotolok</h2>
+                <span class="method-tag">Supervised Learning - ResNet50</span>
+            </div>
+        </div>
+
+        <div class="status-box">
+            <div class="status-label">Status Terakhir</div>
+            <div class="status-value">
+                {% set status = summary.lewotolok.status %}
+                {% if status == 'Kondisi Normal' or status == 'Tenang' %}
+                    <span class="badge badge-normal">{{ status }}</span>
+                {% elif status == 'Erupsi/Awan Kelabu' %}
+                    <span class="badge badge-anomali">{{ status }}</span>
+                {% elif status == 'Asap Putih' %}
+                    <span class="badge badge-asap">{{ status }}</span>
+                {% elif status == 'Tertutup Awan' %}
+                    <span class="badge badge-awan">{{ status }}</span>
+                {% else %}
+                    <span style="color: var(--text-muted);">{{ status }}</span>
+                {% endif %}
+            </div>
+
+            <div class="metric-row">
+                <span>Confidence:</span>
+                <span class="metric-value">{{ summary.lewotolok.confidence }}</span>
+            </div>
+            <div class="metric-row" style="margin-top: 0.35rem;">
+                <span>Waktu Analisis:</span>
+                <span class="metric-value" style="font-size: 0.85rem;">{{ summary.lewotolok.waktu }}</span>
+            </div>
+        </div>
+
+        <div style="margin-top: auto;">
+            <a href="{{ url_for('lewotolok') }}" class="btn btn-primary">
+                ANALISIS LEWOTOLOK
+            </a>
+        </div>
+    </div>
+
+    <!-- GUNUNG TANGKUBAN PERAHU CARD -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">Gunung Tangkuban Perahu</h2>
+                <span class="method-tag">Anomaly Detection - MobileNetV2 + K-Means</span>
+            </div>
+        </div>
+
+        <div class="status-box">
+            <div class="status-label">Status Terakhir</div>
+            <div class="status-value">
+                {% set t_status = summary.tangkuban.status %}
+                {% if t_status == 'Kondisi Normal' %}
+                    <span class="badge badge-normal">{{ t_status }}</span>
+                {% elif t_status == 'Kandidat Anomali' %}
+                    <span class="badge badge-anomali">{{ t_status }}</span>
+                {% else %}
+                    <span style="color: var(--text-muted);">{{ t_status }}</span>
+                {% endif %}
+            </div>
+
+            <div class="metric-row">
+                <span>Anomaly Score:</span>
+                <span class="metric-value">{{ summary.tangkuban.anomaly_score }}</span>
+            </div>
+            <div class="metric-row" style="margin-top: 0.35rem;">
+                <span>Waktu Analisis:</span>
+                <span class="metric-value" style="font-size: 0.85rem;">{{ summary.tangkuban.waktu }}</span>
+            </div>
+        </div>
+
+        <div style="margin-top: auto;">
+            <a href="{{ url_for('tangkuban') }}" class="btn btn-primary">
+                ANALISIS TANGKUBAN
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<!-- RIWAYAT QUICK LINK -->
+<div style="text-align: center; margin-top: 1rem;">
+    <a href="{{ url_for('riwayat') }}" class="btn btn-secondary" style="width: auto; padding: 0.75rem 2rem;">
+        Lihat Riwayat Analisis Lengkap &rarr;
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Analisis Gunung Lewotolok | Volcano Monitoring System{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Analisis Gunung Lewotolok</h1>
+    <p class="page-description">Analisis citra CCTV Gunung Lewotolok menggunakan model ResNet50 untuk mengidentifikasi kondisi visual gunung.</p>
+</div>
+
+<div class="analysis-layout">
+    <!-- LEFT PANEL: UPLOAD & PREVIEW -->
+    <div class="card">
+        <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1.25rem;">Unggah Citra CCTV</h2>
+        
+        <form id="upload-form" data-volcano="lewotolok">
+            <div class="upload-area" id="upload-area">
+                <div class="upload-icon">&#128247;</div>
+                <div class="upload-text">Klik atau seret gambar ke sini</div>
+                <div class="upload-hint">Format yang didukung: JPG, JPEG, PNG, WEBP (Maks 16MB)</div>
+                <input type="file" id="file-input" class="file-input" accept="image/jpeg,image/jpg,image/png,image/webp">
+            </div>
+
+            <div class="preview-container" id="preview-container">
+                <img id="preview-image" src="" alt="Preview Citra" class="preview-image">
+                <div id="preview-filename" class="preview-filename"></div>
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+                <button type="submit" id="analyze-btn" class="btn btn-primary" disabled>
+                    ANALISIS GAMBAR
+                </button>
+            </div>
+        </form>
+
+        <div id="error-box" style="display: none; margin-top: 1rem; padding: 0.85rem; background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; border-radius: 8px; font-size: 0.9rem;"></div>
+    </div>
+
+    <!-- RIGHT PANEL: LOADING / RESULTS -->
+    <div>
+        <!-- LOADING OVERLAY -->
+        <div id="loading-overlay" class="card loading-overlay">
+            <div class="spinner"></div>
+            <div class="loading-text">Sedang menganalisis gambar Lewotolok...</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Proses inferensi ResNet50 sedang berjalan.</div>
+        </div>
+
+        <!-- RESULTS CONTAINER -->
+        <div id="results-container" class="result-card" style="display: none;">
+            <div class="result-header">
+                <div class="result-title">Hasil Analisis Lewotolok</div>
+                <div id="res-main-value" class="result-primary-value">-</div>
+            </div>
+
+            <!-- CONFIDENCE METER -->
+            <div class="confidence-box">
+                <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 0.95rem;">
+                    <span>Tingkat Confidence:</span>
+                    <span id="res-confidence-val" style="color: var(--accent-cyan);">-</span>
+                </div>
+                <div class="confidence-bar-bg">
+                    <div id="res-confidence-bar" class="confidence-bar-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- PROBABILITIES BREAKDOWN -->
+            <div class="probabilities-list">
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem;">
+                    Probabilitas Setiap Kelas:
+                </div>
+
+                <!-- Tertutup Awan -->
+                <div class="probability-item">
+                    <div class="probability-label">
+                        <span>Tertutup Awan</span>
+                        <span id="prob-val-tertutup-awan">0.00%</span>
+                    </div>
+                    <div class="prob-bar-bg">
+                        <div id="prob-bar-tertutup-awan" class="prob-bar-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Asap Putih -->
+                <div class="probability-item">
+                    <div class="probability-label">
+                        <span>Asap Putih</span>
+                        <span id="prob-val-asap-putih">0.00%</span>
+                    </div>
+                    <div class="prob-bar-bg">
+                        <div id="prob-bar-asap-putih" class="prob-bar-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Erupsi/Awan Kelabu -->
+                <div class="probability-item">
+                    <div class="probability-label">
+                        <span>Erupsi/Awan Kelabu</span>
+                        <span id="prob-val-erupsi-awan-kelabu">0.00%</span>
+                    </div>
+                    <div class="prob-bar-bg">
+                        <div id="prob-bar-erupsi-awan-kelabu" class="prob-bar-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Tenang -->
+                <div class="probability-item">
+                    <div class="probability-label">
+                        <span>Tenang</span>
+                        <span id="prob-val-tenang">0.00%</span>
+                    </div>
+                    <div class="prob-bar-bg">
+                        <div id="prob-bar-tenang" class="prob-bar-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXECUTION SPECS -->
+            <div class="spec-list">
+                <div class="spec-item">
+                    <span class="spec-name">Durasi Eksekusi</span>
+                    <span id="res-duration" class="spec-value">-</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-name">Nama File</span>
+                    <span id="res-filename" class="spec-value">-</span>
+                </div>
+                <div class="spec-item" style="grid-column: span 2;">
+                    <span class="spec-name">Waktu Analisis</span>
+                    <span id="res-timestamp" class="spec-value">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
