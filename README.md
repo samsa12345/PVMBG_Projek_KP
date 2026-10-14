@@ -370,8 +370,8 @@ Badan Geologi, Kementerian Energi dan Sumber Daya Mineral Republik Indonesia.
 
 **Pembimbing Lapangan**
 
-Dr. Devy Kamil Syahbana
-Achmad Fathony, S.T.
+- Dr. Devy Kamil Syahbana
+- Achmad Fathony, S.T.
 
 ## 📚 Dokumentasi
 
