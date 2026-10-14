@@ -77,23 +77,28 @@ Bagian ini menampilkan dokumentasi antarmuka aplikasi. Gambar akan muncul setela
 
 ### Dashboard
 
-![Dashboard Volcano Monitoring System](docs/images/dashboard.jpg)
+<img width="827" height="395" alt="image" src="https://github.com/user-attachments/assets/4f8477a5-5fd1-449c-a98d-5fab9f54cdd5" />
+
 
 ### Halaman Klasifikasi Lewotolok
 
-![Halaman klasifikasi Gunung Lewotolok](docs/images/halaman_lewotolok.jpg)
+<img width="827" height="397" alt="image" src="https://github.com/user-attachments/assets/ac57c4db-7711-453d-9ff7-c5885129cda3" />
+
 
 ### Halaman Tangkuban Perahu
 
-![Halaman pengelompokan dan deteksi kandidat anomali Tangkuban Perahu](docs/images/halaman_tangkuban.jpg)
+<img width="827" height="396" alt="image" src="https://github.com/user-attachments/assets/d7178b04-6ce1-4dcb-b7c3-7e09045d49fe" />
+
 
 ### Halaman Riwayat
 
-![Halaman riwayat sistem](docs/images/halaman_riwayat.jpg)
+<img width="827" height="395" alt="image" src="https://github.com/user-attachments/assets/b635b661-4f74-4b00-ba5d-549d7a073b1a" />
+
 
 ### Halaman Informasi
 
-![Halaman informasi sistem](docs/images/halaman_info.jpg)
+<img width="827" height="394" alt="image" src="https://github.com/user-attachments/assets/34eb0dd1-4597-4e77-a02a-ab35f6b7eb66" />
+
 
 ## 🧠 Metode dan Teknologi Machine Learning
 
@@ -149,7 +154,8 @@ Dataset dibagi dengan proporsi 70% data pelatihan, 15% data validasi, dan 15% da
 
 Hasil pengujian menunjukkan bahwa model dapat mengklasifikasikan citra berdasarkan empat kategori visual yang ditentukan. Nilai akurasi perlu dibaca bersama metrik lainnya, khususnya F1-score, untuk mendapatkan gambaran performa yang lebih menyeluruh.
 
-![Hasil performa model ResNet50](docs/images/resnet50_performance.jpg)
+<img width="646" height="303" alt="image" src="https://github.com/user-attachments/assets/694ba6a0-c83e-408b-81f1-b2329c4c0934" />
+
 
 ### B. Hasil Pengelompokan dan Deteksi Kandidat Anomali Tangkuban Perahu
 
@@ -170,9 +176,14 @@ Nilai *Silhouette Score* digunakan untuk membantu mengevaluasi kualitas pengelom
 
 Hasil tersebut merupakan hasil analisis terhadap dataset yang digunakan. Kategori kandidat anomali tidak dapat langsung diartikan sebagai erupsi atau kondisi berbahaya tanpa pemeriksaan lebih lanjut.
 
-![Distribusi cluster Tangkuban Perahu](docs/images/tangkuban_cluster_distribution.jpg)
+![Distribusi cluster Tangkuban Perahu]
+<img width="549" height="470" alt="image" src="https://github.com/user-attachments/assets/62b1c06e-31ac-4c6d-898a-7b3c243ce7a1" />
+<img width="549" height="470" alt="image" src="https://github.com/user-attachments/assets/d99974fd-9d7b-4241-b0d5-c65125b3d491" />
+<img width="549" height="470" alt="image" src="https://github.com/user-attachments/assets/15d3f8bd-4643-43a3-a0ba-5d423b896919" />
 
-![Visualisasi deteksi kandidat anomali Tangkuban Perahu](docs/images/tangkuban_anomaly_detection.jpg)
+![Visualisasi deteksi kandidat anomali Tangkuban Perahu]
+<img width="615" height="730" alt="image" src="https://github.com/user-attachments/assets/221cb7e7-246a-489c-88f9-bb60ef074655" />
+
 
 ## 🏗️ Arsitektur Sistem
 
